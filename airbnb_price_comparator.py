@@ -11,8 +11,9 @@ from bs4 import BeautifulSoup
 def get_prices(attr_class, price_class, soup):
     for listing in soup.find_all('div', class_="_8ssblpx"):
         if "1 bedroom" in listing.find('div', class_=attr_class).text:
-            for price in listing.find_all('span', class_=price_class):
-                print(price.text)
+            price = listing.find('span', class_=price_class)
+            print(price.text)
+            print()
 
 
 url = "https://www.airbnb.com/s/saigon/homes?source=mc_search_bar&search_type=section_navigation&screen_size=large&checkin=2019-10-31&checkout=2019-11-07&adults=1&refinement_paths%5B%5D=%2Fhomes&place_id=ChIJ0T2NLikpdTERKxE8d61aX_E"
@@ -28,7 +29,7 @@ first_attr_class = "_1s7voim"
 first_price_class = "_1p7iugi"
 
 second_attr_class = "_1jlnvra2"
-second_price_class = "_61b3pa"
+second_price_class = "_1p3joamp"
 
 try:
     listing_details = WebDriverWait(driver, delay).until(
