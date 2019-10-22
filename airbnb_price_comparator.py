@@ -43,9 +43,9 @@ except TimeoutException:
         second = False
         print("Loading Timeout")
 
-driver.quit()
-
 soup = BeautifulSoup(driver.page_source, "lxml")
+
+driver.quit()
 
 if first:
     print("Type 1")
