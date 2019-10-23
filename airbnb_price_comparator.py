@@ -38,32 +38,45 @@ def main():
 	second_attr_class = '_1jlnvra2'
 	second_price_class = '_1p3joamp'
 
+	try:
+		WebDriverWait(driver, delay).until(
+			EC.presence_of_element_located((By.CSS_SELECTOR, f'div.{first_attr_class}')))
+	except TimeoutException:
+		try:
+			first = False
+			second = True
+			WebDriverWait(driver, delay).until(
+				EC.presence_of_element_located((By.CSS_SELECTOR, f'div.{second_attr_class}')))
+		except TimeoutException:
+			second = False
+			print('Loading Timeout')
+
 
 	while True:
-		try:
-			WebDriverWait(driver, delay).until(
-				EC.presence_of_element_located((By.CSS_SELECTOR, f'div.{first_attr_class}')))
-		except TimeoutException:
-			try:
-				first = False
-				second = True
-				WebDriverWait(driver, delay).until(
-					EC.presence_of_element_located((By.CSS_SELECTOR, f'div.{second_attr_class}')))
-			except TimeoutException:
-				second = False
-				print('Loading Timeout')
-
-		soup = BeautifulSoup(driver.page_source, 'lxml')
 
 		if first:
 			print(f'Page: {i}')
 			print('Type 1')
 			print()
+			try:
+				WebDriverWait(driver, delay).until(
+					EC.presence_of_element_located((By.CSS_SELECTOR, f'div.{first_attr_class}')))
+			except TimeoutException:
+				print('Loading Timeout')
+
+			soup = BeautifulSoup(driver.page_source, 'lxml')
 			get_prices(first_attr_class, first_price_class, soup)
 		elif second:
 			print(f'Page: {i}')
 			print('Type 2')
 			print()
+			try:
+				WebDriverWait(driver, delay).until(
+					EC.presence_of_element_located((By.CSS_SELECTOR, f'div.{second_attr_class}')))
+			except TimeoutException:
+				print('Loading Timeout')
+				
+			soup = BeautifulSoup(driver.page_source, 'lxml')
 			get_prices(second_attr_class, second_price_class, soup)
 
 		i += 1
